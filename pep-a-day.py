@@ -10,7 +10,7 @@ pep8_main_raw = pep8_main_requests.content
 soup = BeautifulSoup(pep8_main_raw, 'lxml')
 
 #Get Title Of Pep
-print(soup.title.get_text())
+pep_title = soup.title.get_text()
 
 ###Get Complete List of peps from index###
 pep_list = [] # initialize blank list
