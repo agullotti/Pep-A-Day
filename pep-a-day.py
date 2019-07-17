@@ -15,8 +15,11 @@ pep_title = soup.title.get_text()
 ###Get Complete List of peps from index###
 pep_list = [] # initialize blank list
 
-#for each link in our soup find any link with a class of refrence external
+#for each link in our soup find any link with a class of refrence external, append to pep_list
 for a in soup.findAll('a', class_='reference external'):
     p = a.get_text()
     pep_list.append(p)
-print(pep_list)
+
+#random pep choice
+random_pep = random.choice(pep_list)
+print('your chosen Pep is', random_pep)
