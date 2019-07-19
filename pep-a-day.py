@@ -2,6 +2,12 @@ from bs4 import BeautifulSoup
 import lxml
 import requests
 import random
+import tkinter as Tk
+
+#gui information
+window =Tk.Tk()
+window.title("Pep-A-Day")
+
 
 pep8_main = "https://www.python.org/dev/peps/"
 pep8_main_requests = requests.get(pep8_main)
@@ -35,7 +41,12 @@ else:
 pep_url = requests.get(random_url)
 pep_url_raw = pep_url.content
 pep_soup = BeautifulSoup(pep_url_raw, 'lxml')
-
+pep_soup_text = str(pep_soup.get_text())
 #find all items with class 'text' and remove markup
-for t in pep_soup.findAll(class_='text'):
-    print(t.get_text())
+s=Tk.Scrollbar(window)
+s.pack(side ='right', fill = 'y')
+text= Tk.Text(window, wrap='word').pack(side='left', fill='both', expand='yes')
+text.config(yscrollcommand=s.set)
+s.config(command=text.yview)
+text.insert(Tk.END, pep_soup_text)
+window.mainloop()
