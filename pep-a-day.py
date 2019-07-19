@@ -22,4 +22,20 @@ for a in soup.findAll('a', class_='reference external'):
 
 #random pep choice
 random_pep = random.choice(pep_list)
-print('your chosen Pep is', random_pep)
+
+#control statement to add additional 0 to pep number if needed
+#website uses a 4 digit code for pep number
+
+if len(random_pep) != 4:
+    random_url = pep8_main + "pep-0" + random_pep
+else:
+    random_url =pep8_main + "pep-" + random_pep
+
+#requests function to grab random pep content
+pep_url = requests.get(random_url)
+pep_url_raw = pep_url.content
+pep_soup = BeautifulSoup(pep_url_raw, 'lxml')
+
+#find all items with class 'text' and remove markup
+for t in pep_soup.findAll(class_='text'):
+    print(t.get_text())
