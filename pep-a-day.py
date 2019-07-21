@@ -2,11 +2,11 @@ from bs4 import BeautifulSoup
 import lxml
 import requests
 import random
-import tkinter as Tk
+from tkinter import *
 
 #gui information
-window =Tk.Tk()
-window.title("Pep-A-Day")
+master = Tk()
+master.title("Pep-A-Day")
 
 
 pep8_main = "https://www.python.org/dev/peps/"
@@ -42,11 +42,18 @@ pep_url = requests.get(random_url)
 pep_url_raw = pep_url.content
 pep_soup = BeautifulSoup(pep_url_raw, 'lxml')
 pep_soup_text = str(pep_soup.get_text())
-#find all items with class 'text' and remove markup
-s=Tk.Scrollbar(window)
-s.pack(side ='right', fill = 'y')
-text= Tk.Text(window, wrap='word').pack(side='left', fill='both', expand='yes')
-text.config(yscrollcommand=s.set)
-s.config(command=text.yview)
-text.insert(Tk.END, pep_soup_text)
-window.mainloop()
+
+# Create Scroll Bar
+scroll=Scrollbar(master)
+scroll.pack(side=RIGHT, fill=Y)
+
+# Create Text Widget for Pep
+gui_text = Text(master, wrap=NONE, yscrollcommand=scroll.set)
+gui_text.insert("1.0", pep_soup_text)
+gui_text.pack(side=LEFT, expand=True, fill='both')
+
+#configure scrollbar for text widget
+scroll.configure(command=gui_text.yview)
+
+#start main
+mainloop()
