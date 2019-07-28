@@ -7,12 +7,19 @@ from tkinter import *
 # gui information
 master = Tk()
 master.title("Pep-A-Day")
+master.configure(background='red')
 
 pep8_main = "https://www.python.org/dev/peps/"
 pep8_main_requests = requests.get(pep8_main)
 pep8_main_raw = pep8_main_requests.content
 
 soup = BeautifulSoup(pep8_main_raw, features="lxml")
+<<<<<<< HEAD
+=======
+
+# Get Title Of Pep
+pep_title = soup.title.get_text()
+>>>>>>> worked formatting further. Added trial colors.
 
 # Get Complete List of peps from index
 pep_list = [] # initialize blank list
@@ -56,12 +63,21 @@ scroll.pack(side=RIGHT, fill=Y)
 # Create Text Widget for Pep
 gui_text = Text(master, wrap=NONE, yscrollcommand=scroll.set)
 gui_text.configure(background='#306998', foreground='#FFD43B')
+<<<<<<< HEAD
 gui_text.insert("1.0", pep_section_list3)
+=======
+gui_text.insert("1.0", lt3)
+>>>>>>> worked formatting further. Added trial colors.
 gui_text.pack(side=LEFT, expand=True, fill='both')
 
 # configure scrollbar for text widget
 scroll.configure(command=gui_text.yview)
 
+<<<<<<< HEAD
 
 # start main
 mainloop()
+=======
+# start main
+mainloop()
+>>>>>>> worked formatting further. Added trial colors.
