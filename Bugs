@@ -4,3 +4,7 @@ Last Updated By Andy Gullotti on 7/27/2019
 
 1. If random page contains more than a single page of content, content will be cut off
 
+2. pep_title was returning the incorrect title for page. 
+  SQUASHED - corrected code to allow for title of chosen random pep to be displayed versus title of pep index.
+  
+
