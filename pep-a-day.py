@@ -3,8 +3,11 @@ import lxml
 import requests
 import random
 from tkinter import *
+import sys
+import os
 
-# gui information
+
+# initialize tkinter
 master = Tk()
 
 # function to convert requests to bs4 soup
@@ -17,11 +20,14 @@ def requests_bs4_convert(url):
     return request_soup_convert
 
 
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 # Stage 1 - finding and choosing our random pep
 
 
-pep8_main = "https://www.python.org/dev/peps/"
-main_soup = requests_bs4_convert(pep8_main)
+peps_main = "https://www.python.org/dev/peps/"
+main_soup = requests_bs4_convert(peps_main)
 # Get Complete List of peps from index
 pep_list = []  # initialize blank list
 
@@ -34,12 +40,12 @@ for a in main_soup.findAll('a', class_='reference external'):
 random_pep = random.choice(pep_list)
 
 # control statement to add additional 0 to pep number if needed
-# website uses a 4 digit code for pep number
+# website uses a 4 digit code for pep number link but displays as a 3 digit
 
 if len(random_pep) != 4:
-    random_url = pep8_main + "pep-0" + random_pep
+    random_url = peps_main + "pep-0" + random_pep
 else:
-    random_url = pep8_main + "pep-" + random_pep
+    random_url = peps_main + "pep-" + random_pep
 
 # requests function to grab  randomly chosen pep content
 
@@ -68,9 +74,11 @@ for s in pep_soup_body:
     text_list.append(text_list_2)
 text_list_final = ' '.join(str(x) for x in text_list)
 
+# create restart button
+restart_button = Button(master, text='Again?', command=restart_program).pack(fill=Y)
 
 # Create Scroll Bar
-scroll=Scrollbar(master)
+scroll = Scrollbar(master)
 scroll.pack(side=RIGHT, fill=Y)
 
 # Create Text Widget for Pep
@@ -78,6 +86,7 @@ gui_text = Text(master, wrap=WORD, yscrollcommand=scroll.set, font="Times", widt
 gui_text.configure(background='#306998', foreground='#FFD43B')
 gui_text.insert("1.0", text_list_final)
 gui_text.pack(side=LEFT, expand=True, fill='both')
+
 
 # configure scrollbar for text widget
 scroll.configure(command=gui_text.yview)
